@@ -1,6 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, } from 'react-native';
 import React , {useState}from 'react'
-export default function CreateAccount() {
+export default function CreateAccount({ onClose }) {
     const [name, setName] = useState('');
     const [errorname, setErrorname] = useState('');
     const [password, setPassword] = useState('');
@@ -14,14 +14,16 @@ export default function CreateAccount() {
 
     const ValidateName = () => {
         if (name.length === 0) {
-          setErrorname('Please enter a name');
+          setErrorname('Please enter the name');
         } else {
           setErrorname('');
         }
     }
-
+    const handleClose = () => {
+        onClose(false);
+    };
     const validatePassword = () => {
-        if (password.length < 8) {
+        if (password.length < 7) {
           setErrorpassword('Password must be at least 8 characters');
         } else {
           setErrorpassword('');
@@ -53,6 +55,28 @@ export default function CreateAccount() {
             setErrorCollegeCode('');
         }
     }
+
+    const ValidateRegister = ()=> {
+        if(name.length == 0) {
+            setErrorname('Please enter the name');
+        }else if(password.length == 0){
+            setErrorpassword('Please eneter the password');
+        }else if(conformpassword.length == 0){
+            setErrorconformpassword('Please re-enter a password');
+        }else if(password != conformpassword){
+            setErrorconformpassword('Password Not match')
+        }else if(CollegeName.length == 0){
+            setErrorCollegeName('Please enter a College Name')
+        }else if (CollegeCode.length === 0) {
+            setErrorCollegeCode('Please enter College code');
+        } else if(CollegeCode.length < 3)  {
+            setErrorCollegeCode('College code atleast have 4 digits');
+        }else{
+            alert('Registered Successfully');
+            handleClose();
+        }
+    }
+
     return (
         <View style={styles.container}>
           <View style={styles.loginContainer}>
@@ -99,7 +123,7 @@ export default function CreateAccount() {
               onChange={ValidateCollageCode}
             />
             {errorCollegeCode? <Text style={styles.errorText}>{errorCollegeCode}</Text> : null}
-            <TouchableOpacity style={styles.loginButton}>
+            <TouchableOpacity style={styles.loginButton} onPress={ValidateRegister}>
               <Text style={styles.buttonText}>Register Account</Text>
             </TouchableOpacity>
             <View style={styles.lineStyle} >
@@ -107,7 +131,7 @@ export default function CreateAccount() {
             <TouchableOpacity>
               <Text style={styles.linkText1}>Forget Password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleClose}>
               <Text style={styles.linkText2}>Alreday have an account? Login!</Text>
             </TouchableOpacity>
           </View>
@@ -128,7 +152,7 @@ export default function CreateAccount() {
       loginContainer: {
         width: '80%',
         height: 'auto',
-        backgroundColor: 'white',
+        backgroundColor: '#f2f2f2',
         padding: 20,
         borderRadius: 15,
         elevation: 3,

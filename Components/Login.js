@@ -1,12 +1,17 @@
 import React ,{useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,Modal, ImageBackground } from 'react-native';
+import CreateAccount from './CreateAccount';
 
 
-export default function Login() {
+
+const BgImage = require("/home/ravi/ReactNative/events/assets/bg.jpg")
+
+export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const NewRegistrationEventListener = () => {
     alert('New registration');
@@ -29,7 +34,23 @@ export default function Login() {
       setPasswordError('');
     }
   }
-
+  const Validate = () => {
+    if (email.length === 0) {
+      setEmailError('Please enter an email address');
+    } else if (email.indexOf('@') === -1) {
+      setEmailError('Please enter a valid email address');
+    }
+    else if(password.length == 0) {
+      setPasswordError('Please enter the password');
+    }
+    else if (password.length < 8) {
+      setPasswordError('Password must be at least 8 characters');
+    } else {
+      setPasswordError('');
+      setEmailError('');
+      navigation.navigate('DashBord');
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={styles.loginContainer}>
@@ -51,15 +72,25 @@ export default function Login() {
           onChange={ValidatePassword}
         />
         {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity style={styles.loginButton} onPress={Validate}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <View style={styles.lineStyle} >
         </View>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => setModalVisible(true)} >
           <Text style={styles.linkText}>Create an Account</Text>
         </TouchableOpacity>
         {/* <Text>email:{password}</Text> */}
+        <Modal visible={modalVisible} 
+        onRequestClose={() => setModalVisible(false)} 
+        animationType='slide' 
+        presentationStyle='pageSheet'>
+          {/* <ImageBackground source={BgImage} style={{width:'auto',height:"100%"}} blurRadius={10}> */}
+            <View style={{width:'100%',height:'100%',backgroundColor:'#2e5bcd',}}>
+              <CreateAccount onClose={setModalVisible}/>
+            </View>
+          {/* </ImageBackground> */}
+        </Modal>
       </View>
     </View>
   );
@@ -68,9 +99,10 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 100,
-    width: 400,
+    height: '100%',
+    width: '100%',
     justifyContent: 'center',
+    backgroundColor:'#2e5bcd',
     alignItems: 'center',
   },
   loginContainer: {
@@ -123,7 +155,7 @@ const styles = StyleSheet.create({
     marginTop:10,
     color: '#2e5bcd',
     textDecorationLine: 'underline',
-    marginLeft: 70,
+    marginLeft: 80,
 
   },
   errorText: {
