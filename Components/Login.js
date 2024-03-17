@@ -4,7 +4,7 @@ import CreateAccount from './CreateAccount';
 
 
 
-const BgImage = require("/home/ravi/ReactNative/events/assets/bg.jpg")
+const BgImage = require("/home/ravi/ReactNative/event/assets/bg.jpg")
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -48,7 +48,7 @@ export default function Login({navigation}) {
     } else {
       setPasswordError('');
       setEmailError('');
-      navigation.navigate('DashBord');
+      navigation.navigate('Events');
     }
   }
   return (
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     alignItems: 'center',
+    textAlign:'center',
     marginTop: 10,
   },
   buttonText: {

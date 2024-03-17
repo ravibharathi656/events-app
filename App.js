@@ -5,6 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SideBar from './Components/SideBar';
 import DashBord from './Components/DashBord';
+import ListEvents from './Components/ListEvents';
+import Events from './Components/Events';
+
+
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -14,6 +18,8 @@ export default function App() {
         <Stack.Screen name="Login" style={styles.LoginContainor} component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="SideBar" style={styles.LoginContainor} component={SideBar} options={{ headerShown: false }}/>
         <Stack.Screen name="DashBord" style={styles.LoginContainor} component={DashBord} options={{ headerShown: false }}/>
+        <Stack.Screen name="ListEvents" style={styles.LoginContainor} component={ListEvents} options={{ headerShown: false }}/>
+        <Stack.Screen name="Events" style={styles.LoginContainor} component={Events} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

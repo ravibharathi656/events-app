@@ -190,6 +190,7 @@ export default function CreateAccount({ onClose }) {
         backgroundColor: '#2e5bcd',
         width: '100%',
         padding: 10,
+        textAlign:'center',
         height: 40,
         borderRadius: 20,
         alignItems: 'center',
